@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>a note for you 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    background: #ffd9e6;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+/* background hearts */
+.bg-heart {
+    position: absolute;
+    width: 34px;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* wrapper */
+.wrapper {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 80px 0;
+}
+
+/* note card */
+.note {
+    background: #fffafb;
+    width: 440px;
+    max-width: 88%;
+    padding: 32px 28px;
+    border-radius: 24px;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+    font-family: 'Caveat', cursive;
+    font-size: 24px;
+    line-height: 1.55;
+    color: #444;
+    position: relative;
+}
+
+/* SIDE IMAGES */
+.side-img {
+    position: absolute;
+    width: 180px;
+    border-radius: 18px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    z-index: 1;
+}
+
+/* Zig Zag Layout */
+.img1 { left: 150px; top: 25px; }
+.img2 { right: 150px; top: 250px; }
+.img3 { left: 150px; top: 450px; }
+.img4 { right: 150px; top: 750px; }
+.img5 { left: 150px; top: 1050px; }
+
+.note p {
+    margin: 14px 0;
+}
+
+.sign {
+    margin-top: 22px;
+    font-size: 26px;
+}
+
+.corner-heart {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+.association {
+    position: fixed;
+    bottom: 16px;
+    left: 18px;
+    font-size: 13px;
+    opacity: 0.65;
+    z-index: 3;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+function generateHearts() {
+    const totalHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        window.innerHeight
+    );
+
+    const cols = 8;
+    const rows = Math.ceil(totalHeight / 180);
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            const h = document.createElement("img");
+            h.src =
+              "data:image/svg+xml;utf8," +
+              "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2'>" +
+              "<path d='M12 21s-6-4.35-9-8.28C-1 7.5 3 3 7.5 5.5C9.5 6.5 12 9 12 9s2.5-2.5 4.5-3.5C21 3 25 7.5 21 12.72C18 16.65 12 21 12 21z'/>" +
+              "</svg>";
+
+            h.className = "bg-heart";
+            h.style.left = (c + Math.random()) * (100 / cols) + "vw";
+            h.style.top = (r * 180 + Math.random() * 160) + "px";
+            h.style.transform = `rotate(${Math.random() * 70 - 35}deg)`;
+
+            document.body.appendChild(h);
+        }
+    }
+}
+window.onload = generateHearts;
+</script>
+
+<!-- SIDE IMAGES (ZIG ZAG) -->
+<img src="1.png" class="side-img img1">
+<img src="2.png" class="side-img img2">
+<img src="3.png" class="side-img img3">
+<img src="4.png" class="side-img img4">
+<img src="5.png" class="side-img img5">
+
+<div class="wrapper">
+  <div class="note">
+    <p>hey vaishu 🤍</p>
+
+    <p>
+      do you remember how this all started? ✨<br>
+      those first few days of college,<br>
+      when we kept meeting near that staircase,<br>
+      not knowing it would slowly become<br>
+      <b>our little place</b> 💕
+    </p>
+
+    <p>
+      from sharing food 🍟🌮<br>
+      way too much food honestly 😅,<br>
+      to roaming around without any plan 🌸,<br>
+      just laughing, talking,<br>
+      and feeling okay just being there 🤍
+    </p>
+
+    <p>
+      somewhere between<br>
+      eating together ❤️,<br>
+      walking together 🌹,<br>
+      and doing absolutely nothing together,<br>
+      you became my comfort 🤍
+    </p>
+
+    <p>
+      i didn’t fall all at once.<br>
+      i just slowly realized 🌙<br>
+      that my days felt lighter ✨,<br>
+      calmer,<br>
+      better —<br>
+      when you were in them 🤍
+    </p>
+
+    <p>
+      and now,<br>
+      here we are 😊<br>
+      still us ❤️<br>
+      still choosing each other 💕<br>
+      still finding home<br>
+      in the smallest moments 🌸
+    </p>
+
+    <div class="sign">
+      always & forever,<br>
+      your baby boy 🤍
+    </div>
+
+    <div class="corner-heart">🤍</div>
+  </div>
+</div>
+
+<div class="association">
+  for you. always.
+</div>
+
+</body>
+</html>

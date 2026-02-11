@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>YAY 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    background: linear-gradient(180deg, #ff4da6 0%, #ff1a8c 50%, #b30059 100%);
+}
+
+.bg-heart {
+    position: absolute;
+    width: 38px;
+    opacity: 0.9;
+    z-index: 0;
+    filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo {
+    width: 260px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    margin-bottom: 25px;
+    margin-top: 40px;
+}
+
+h1, h2, h3 {
+    color: #330014;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+}
+
+h1 { font-size: 46px; margin: 10px 0 6px; }
+h2 { font-size: 32px; margin: 4px 0; }
+h3 { font-size: 28px; margin: 6px 0 0; }
+
+.confetti {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.corner-box {
+    position: fixed;
+    right: 20px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 18px;
+    padding: 12px 14px;
+    width: 180px;
+    text-align: center;
+    font-size: 14px;
+    z-index: 3;
+    backdrop-filter: blur(6px);
+}
+
+.corner-box button {
+    margin: 6px 6px 0;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.yes-btn { background: #1f9d4c; color: white; }
+.no-btn  { background: #ff2a2a; color: white; }
+
+.sad-text {
+    position: fixed;
+    bottom: 28px;
+    right: 26px;
+    font-size: 13px;
+    opacity: 0.9;
+    z-index: 3;
+    text-align: right;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+
+/* ---------- BACKGROUND HEARTS ---------- */
+const rows = 6;
+const cols = 8;
+for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < cols; c++) {
+    const h = document.createElement("img");
+    h.src =
+      "data:image/svg+xml;utf8," +
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5'>" +
+      "<path d='M12 21s-6-4.35-9-8.28C-1 7.5 3 3 7.5 5.5C9.5 6.5 12 9 12 9s2.5-2.5 4.5-3.5C21 3 25 7.5 21 12.72C18 16.65 12 21 12 21z'/>" +
+      "</svg>";
+    h.className = "bg-heart";
+    h.style.left = (c * 12 + Math.random()*4) + "vw";
+    h.style.top = (r * 16 + Math.random()*4) + "vh";
+    h.style.transform = `rotate(${Math.random() * 360}deg)`;
+    document.body.appendChild(h);
+  }
+}
+
+
+/* ---------- IMPROVED CONFETTI ---------- */
+
+const emojis = ["🌻","♥","💍","🎈","🌸","💐","🌼","💋"];
+let confettis = [];
+const gravity = 0.22;
+
+function spawnConfetti(side) {
+    for (let i = 0; i < 40; i++) {  // slightly increased amount
+
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+        c.x = side === "left" ? 0 : window.innerWidth;
+        c.y = window.innerHeight - 5;
+
+        const centerX = window.innerWidth / 2;
+        const dx = centerX - c.x;
+
+        // Aim much higher
+        const angle = Math.atan2(-window.innerHeight * 0.95, dx);
+
+        // Wider cone spread
+        const spread = (Math.random() - 0.5) * 1.1;
+        const finalAngle = angle + spread;
+
+        // Slightly faster
+        const speed = 25 + Math.random() * 10;
+
+        c.vx = Math.cos(finalAngle) * speed;
+        c.vy = Math.sin(finalAngle) * speed;
+
+        c.style.left = c.x + "px";
+        c.style.top = c.y + "px";
+        c.style.fontSize = (20 + Math.random() * 22) + "px";
+        c.style.opacity = 1;
+
+        document.body.appendChild(c);
+        confettis.push(c);
+    }
+}
+
+function animateConfetti() {
+    for (let i = confettis.length - 1; i >= 0; i--) {
+
+        const c = confettis[i];
+
+        c.vy += gravity;
+        c.x += c.vx;
+        c.y += c.vy;
+
+        c.vx *= 0.997;
+
+        c.style.opacity -= 0.0035;
+
+        c.style.left = c.x + "px";
+        c.style.top = c.y + "px";
+
+        if (c.y > window.innerHeight + 120 || c.style.opacity <= 0) {
+            c.remove();
+            confettis.splice(i, 1);
+        }
+    }
+
+    requestAnimationFrame(animateConfetti);
+}
+
+animateConfetti();
+
+setTimeout(() => {
+    spawnConfetti("left");
+    spawnConfetti("right");
+}, 400);
+
+function replayConfetti() {
+    spawnConfetti("left");
+    spawnConfetti("right");
+}
+
+function sayNo() {
+    document.getElementById("replay-box").remove();
+    const sad = document.createElement("div");
+    sad.className = "sad-text";
+    sad.innerHTML = "who am i,<br>what am i,<br>only for u beech 😔";
+    document.body.appendChild(sad);
+}
+
+</script>
+
+<div class="content">
+    <img src="us.png" class="photo" alt="us">
+    <h1>YAAAYAAYAAYAAYAAYAAY 💖</h1>
+    <h2>I KNEW IT VAISHHH 😭✨</h2>
+    <h3>I LOVE YOU TOOO HEHE🤍</h3>
+</div>
+
+<div class="corner-box" style="bottom:160px;">
+    i wrote something<br>
+    just for you 🤍<br>
+    <button class="yes-btn" onclick="window.location.href='note.html'">
+        read it
+    </button>
+</div>
+
+<div class="corner-box" id="replay-box" style="bottom:20px;">
+    wanna see that<br>
+    emoji firework again<br>
+    love? 💖(it might lag a bit)<br>
+    <button class="yes-btn" onclick="replayConfetti()">yes</button>
+    <button class="no-btn" onclick="sayNo()">no</button>
+</div>
+
+</body>
+</html>

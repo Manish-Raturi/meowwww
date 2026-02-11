@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Question</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    color: #ffd6e8;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
+
+    text-align: center;
+
+    /* darker + richer gradient */
+background: linear-gradient(180deg, #ff4da6 0%, #ff1a8c 50%, #b30059 100%);
+
+
+}
+
+/* background hearts */
+.heart {
+    position: absolute;
+    width: 38px;
+    opacity: 0.9; /* much clearer */
+    z-index: 0;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6)); /* subtle glow */
+    pointer-events: none; /* so they don't block buttons */
+}
+
+
+.content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cat {
+    margin-top: 85px;
+}
+.cat img {
+    width: 220px;
+}
+
+.question {
+    font-size: 44px;
+    font-weight: 700;
+    margin-top: 28px;
+
+    color: #330014; /* very dark maroon for max contrast */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.15); /* subtle white glow */
+}
+
+.name {
+    font-size: 38px;
+    margin-top: 6px;
+
+    color: #2a0011; /* slightly lighter but still dark */
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.12);
+}
+
+
+.buttons {
+    margin-top: 20px;
+    position: relative;
+    width: 700px;
+    height: 220px;
+}
+
+button {
+    padding: 22px 50px;
+    font-size: 24px;
+    border: none;
+    border-radius: 45px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
+    position: absolute;
+    transition: transform 0.3s ease;
+}
+
+#yes {
+    background: #1f9d4c;
+    color: white;
+    left: 170px;
+    top: 40px;
+}
+
+#no {
+    background: #ff2a2a;
+    color: white;
+    left: 420px;
+    top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- evenly scattered tilted outline hearts -->
+<script>
+const rows = 6;   // more rows
+const cols = 8;   // more columns
+
+for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < cols; c++) {
+    const h = document.createElement("img");
+
+    h.src =
+      "data:image/svg+xml;utf8," +
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5'>" +
+      "<path d='M12 21s-6-4.35-9-8.28C-1 7.5 3 3 7.5 5.5 9.5 6.5 12 9 12 9s2.5-2.5 4.5-3.5C21 3 25 7.5 21 12.72 18 16.65 12 21 12 21z'/>" +
+      "</svg>";
+
+    h.className = "heart";
+
+    // Even distribution + slight randomness
+    const x = (c + Math.random() * 0.8) * (100 / cols);
+    const y = (r + Math.random() * 0.8) * (100 / rows);
+
+    h.style.left = x + "vw";
+    h.style.top = y + "vh";
+
+    // random angle
+    h.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+    document.body.appendChild(h);
+  }
+}
+</script>
+
+
+<div class="content">
+    <div class="cat">
+        <img src="cat.gif" alt="cute cat">
+    </div>
+
+    <div class="question">Will you be my Valentine :') </div>
+    <div class="name">Vaish ??? (pweasee)</div>
+
+    <div class="buttons">
+        <button id="yes" onclick="goYes()">Yesshhh :D</button>
+        <button id="no">No :(</button>
+    </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+
+const texts = [
+    "No 😕",
+    "Really No ? 😔 ",
+    "It must be a misclick ig😃",
+    "Again ? 😑 ",
+    "click here if me is ugly 😒",
+    "Wait 🤨, wdym ? 🤨",
+    "HAHA i wont let u say no 🤗",
+    "uh huh ur mine go click yes 😘",
+    "you're not fast bish 🤣🤣",
+    "i wont repeat myself 😪",
+    "why you coming again here ? 😒",
+    "go to yes now 😁"
+];
+
+let index = 0;
+
+function moveButton() {
+    const minX = -250;
+    const maxX = 250;
+    const minY = -160;
+    const maxY = -40;
+
+    const x = minX + Math.random() * (maxX - minX);
+    const y = minY + Math.random() * (maxY - minY);
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    index = (index + 1) % texts.length;
+    noBtn.innerText = texts[index];
+}
+
+noBtn.addEventListener("mouseenter", moveButton);
+noBtn.addEventListener("click", moveButton);
+
+function goYes() {
+    window.location.href = "yes.html";
+}
+</script>
+
+</body>
+</html>
